@@ -18,10 +18,11 @@ object OkHttpSingleton {
         client = OkHttpClient().newBuilder()
             .cookieJar(cookieJar)
             .addInterceptor { chain ->
-                val newRequest = chain.request().newBuilder()
+                var request = chain.request()
+                request = request.newBuilder()
                     .addHeader("User-Agent", UA)
                     .build()
-                chain.proceed(newRequest)
+                chain.proceed(request)
             }
             .build()
     }

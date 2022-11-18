@@ -2,6 +2,7 @@ package com.hydroh.yamibo.ui.node
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,7 @@ class HomeNode(
         if (listItems.isNotEmpty()) {
             HomeListContent(listItems)
         } else {
-            TODO()
+            Text("TODO")
         }
     }
 

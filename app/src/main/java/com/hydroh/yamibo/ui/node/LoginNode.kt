@@ -1,10 +1,9 @@
 package com.hydroh.yamibo.ui.node
 
-import com.hydroh.yamibo.R
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -21,6 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
+import com.hydroh.yamibo.R
+import com.hydroh.yamibo.network.login
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginNode(
     buildContext: BuildContext,
@@ -86,6 +89,10 @@ class LoginNode(
         var password by remember { mutableStateOf("") }
         val showPassword = rememberSaveable { mutableStateOf(false) }
 
+        val scope = rememberCoroutineScope()
+        var isLoading by remember { mutableStateOf(false) }
+        var isLoginFailed by remember { mutableStateOf(false) }
+
         Column(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -94,6 +101,7 @@ class LoginNode(
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
+                enabled = !isLoading,
                 label = {
                     Text(
                         text = stringResource(id = R.string.label_username),
@@ -109,6 +117,7 @@ class LoginNode(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
+                enabled = !isLoading,
                 label = {
                     Text(
                         text = stringResource(id = R.string.label_password),
@@ -145,15 +154,30 @@ class LoginNode(
             )
             // Submit
             Button(
-                onClick = navToHome,
+                onClick = {
+                    isLoading = true
+                    scope.launch(Dispatchers.IO) {
+                        if (login(username, password)) {
+                            navToHome()
+                        } else {
+
+                        }
+                        isLoading = false
+                    }
+                },
+                enabled = !isLoading,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 28.dp, bottom = 30.dp),
             ) {
-                Text(
-                    text = stringResource(id = R.string.text_login),
-                    style = MaterialTheme.typography.titleSmall
-                )
+                if (!isLoading) {
+                    Text(
+                        text = stringResource(id = R.string.text_login),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                } else {
+                    CircularProgressIndicator()
+                }
             }
         }
     }
