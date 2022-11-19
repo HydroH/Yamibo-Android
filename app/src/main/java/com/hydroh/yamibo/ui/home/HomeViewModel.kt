@@ -25,13 +25,6 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
-
-    fun toggleSectionExpand(sectionGroup: SectionGroup) {
-        _uiState.apply {
-            sectionGroup.expanded = !sectionGroup.expanded
-            value = value.copy(sectionGroups = value.sectionGroups)
-        }
-    }
 }
 
 data class HomeUIState(

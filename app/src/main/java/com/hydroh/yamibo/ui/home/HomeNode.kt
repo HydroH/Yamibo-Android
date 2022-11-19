@@ -49,9 +49,9 @@ fun HomeScreen(
                 item {
                     FoldableSectionGroup(
                         sectionGroup = it,
-                        expanded = it.expanded,
-                        onClick = { viewModel.toggleSectionExpand(it) },
-                        onExpandedChange = {},
+                        onExpandedChange = { expanded ->
+                            it.expanded = !expanded
+                        },
                     )
                 }
             }

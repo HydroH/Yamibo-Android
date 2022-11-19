@@ -1,5 +1,9 @@
 package com.hydroh.yamibo.model
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
 data class Section(
     val name: String,
     val newCount: String,
@@ -8,8 +12,10 @@ data class Section(
     val replyCount: String,
 )
 
-data class SectionGroup(
+class SectionGroup(
     val name: String,
     val SectionList: List<Section>,
-    var expanded: Boolean,
-)
+    val initialExpanded: Boolean,
+) {
+    var expanded by mutableStateOf(initialExpanded)
+}
