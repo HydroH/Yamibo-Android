@@ -4,14 +4,14 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
-import com.hydroh.yamibo.network.OkHttpSingleton
+import com.hydroh.yamibo.data.DataProvider
 import com.hydroh.yamibo.ui.navigation.RootNode
 import com.hydroh.yamibo.ui.theme.YamiboTheme
 
 class MainActivity : NodeComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        OkHttpSingleton.init(this.applicationContext)
+        DataProvider.init(this.applicationContext)
 
         setContent {
             YamiboTheme {

@@ -8,10 +8,9 @@ import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFader
-import com.hydroh.yamibo.ui.node.HomeNode
-import com.hydroh.yamibo.ui.node.LoginNode
+import com.hydroh.yamibo.ui.home.HomeNode
+import com.hydroh.yamibo.ui.login.LoginNode
 import kotlinx.parcelize.Parcelize
 
 class RootNode(
@@ -44,11 +43,7 @@ class RootNode(
 
     override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
         when (navTarget) {
-            is NavTarget.Home -> HomeNode(buildContext) {
-                backStack.push(NavTarget.Login)
-            }
-            is NavTarget.Login -> LoginNode(buildContext) {
-                backStack.push(NavTarget.Home)
-            }
+            is NavTarget.Home -> HomeNode(buildContext, backStack)
+            is NavTarget.Login -> LoginNode(buildContext, backStack)
         }
 }

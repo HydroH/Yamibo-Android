@@ -1,4 +1,4 @@
-package com.hydroh.yamibo.network
+package com.hydroh.yamibo.data.network
 
 
 object UrlGetter {
