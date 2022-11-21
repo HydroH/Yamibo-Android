@@ -3,7 +3,6 @@ package com.hydroh.yamibo.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hydroh.yamibo.data.DataProvider
-import com.hydroh.yamibo.util.Consts
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,7 +35,7 @@ class LoginViewModel : ViewModel() {
         _uiState.apply {
             value = value.copy(
                 loginState = LoginState.LOADING,
-                errorMessage = "",
+                exception = null,
             )
             viewModelScope.launch(Dispatchers.IO) {
                 try {
@@ -45,7 +44,7 @@ class LoginViewModel : ViewModel() {
                 } catch (e: Exception) {
                     value = value.copy(
                         loginState = LoginState.FAIL,
-                        errorMessage = e.message ?: Consts.ERROR_UNKNOWN,
+                        exception = e,
                     )
                 }
             }
@@ -58,7 +57,7 @@ data class LoginUIState(
     val password: String = "",
     val showPassword: Boolean = false,
     val loginState: LoginState = LoginState.BEFORE,
-    val errorMessage: String = "",
+    val exception: Exception? = null,
 )
 
 enum class LoginState {
