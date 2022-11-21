@@ -1,52 +1,44 @@
 package com.hydroh.yamibo.ui.login
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hydroh.yamibo.data.DataProvider
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(LoginUIState())
-    val uiState: StateFlow<LoginUIState> = _uiState.asStateFlow()
+    var uiState by mutableStateOf(LoginUIState())
+        private set
 
     fun updateUsername(username: String) {
-        _uiState.apply {
-            value = value.copy(username = username)
-        }
+        uiState = uiState.copy(username = username)
     }
 
     fun updatePassword(password: String) {
-        _uiState.apply {
-            value = value.copy(password = password)
-        }
+        uiState = uiState.copy(password = password)
     }
 
     fun toggleShowPassword() {
-        _uiState.apply {
-            value = value.copy(showPassword = !value.showPassword)
-        }
+        uiState = uiState.copy(showPassword = !uiState.showPassword)
     }
 
     fun submitLogin() {
-        _uiState.apply {
-            value = value.copy(
-                loginState = LoginState.LOADING,
-                exception = null,
-            )
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    DataProvider.login(value.username, value.password)
-                    value = value.copy(loginState = LoginState.SUCCESS)
-                } catch (e: Exception) {
-                    value = value.copy(
-                        loginState = LoginState.FAIL,
-                        exception = e,
-                    )
-                }
+        uiState = uiState.copy(
+            loginState = LoginState.LOADING,
+            exception = null,
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                DataProvider.login(uiState.username, uiState.password)
+                uiState = uiState.copy(loginState = LoginState.SUCCESS)
+            } catch (e: Exception) {
+                uiState = uiState.copy(
+                    loginState = LoginState.FAIL,
+                    exception = e,
+                )
             }
         }
     }

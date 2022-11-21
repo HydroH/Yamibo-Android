@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,7 +36,7 @@ fun HomeScreen(
     backStack: BackStack<RootNode.NavTarget>? = null,
     viewModel: HomeViewModel = HomeViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState
     LaunchedEffect(Unit) {
         viewModel.getHomeContent()
     }

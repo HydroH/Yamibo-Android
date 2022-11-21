@@ -8,8 +8,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -49,7 +47,7 @@ fun LoginScreen(
     backStack: BackStack<RootNode.NavTarget>? = null,
     viewModel: LoginViewModel = LoginViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState
     Surface {
         Column(modifier) {
 
