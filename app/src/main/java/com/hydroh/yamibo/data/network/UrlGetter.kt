@@ -10,10 +10,13 @@ object UrlGetter {
     private const val SEARCH_FORUM_URL = "${BASE_URL}search.php?mod=forum"
     private const val FAVORITE_PAGE_URL = "${BASE_URL}home.php?mod=space&do=favorite&view=me"
     private const val MESSAGE_MAIL_PAGE_URL = "${BASE_URL}home.php?mod=space&do=pm"
-    private const val MESSAGE_MAIL_PRIVATE_PAGE_URL = "${BASE_URL}home.php?mod=space&do=pm&subop=view&touid=%s#last"
+    private const val MESSAGE_MAIL_PRIVATE_PAGE_URL =
+        "${BASE_URL}home.php?mod=space&do=pm&subop=view&touid=%s#last"
     private const val MESSAGE_REPLY_PAGE_URL = "${BASE_URL}home.php?mod=space&do=notice&view=mypost"
-    private const val LOGIN_FORM_URL = "${BASE_URL}member.php?mod=logging&action=login&infloat=yes&handlekey=login&inajax=1&ajaxtarget=fwin_content_login"
-    private const val LOGIN_REQUEST_URL = "${BASE_URL}member.php?mod=logging&action=login&loginsubmit=yes&handlekey=login&loginhash=%s&inajax=1"
+    private const val LOGIN_FORM_URL =
+        "${BASE_URL}member.php?mod=logging&action=login&infloat=yes&handlekey=login&inajax=1&ajaxtarget=fwin_content_login"
+    private const val LOGIN_REQUEST_URL =
+        "${BASE_URL}member.php?mod=logging&action=login&loginsubmit=yes&handlekey=login&loginhash=%s&inajax=1"
 
     private const val AVATAR_DEFAULT_URL = "${BASE_URL}uc_server/images/noavatar_%s.gif"
 

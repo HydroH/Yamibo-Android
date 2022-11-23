@@ -3,16 +3,19 @@ package com.hydroh.yamibo.data
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.toMutableStateList
 import com.hydroh.yamibo.data.network.OkHttpSingleton
 import com.hydroh.yamibo.data.network.UrlGetter
 import com.hydroh.yamibo.data.network.syncFormPost
 import com.hydroh.yamibo.data.network.syncGet
-import com.hydroh.yamibo.model.SectionGroup
+import com.hydroh.yamibo.data.parser.getAvatarUrl
+import com.hydroh.yamibo.data.parser.getSectionGroups
+import com.hydroh.yamibo.ui.home.HomeUIState
 import com.hydroh.yamibo.util.LoginException
 import com.hydroh.yamibo.util.NetworkException
+import com.hydroh.yamibo.util.parse
 import com.hydroh.yamibo.util.removeScripts
 import okhttp3.FormBody
-import org.jsoup.Jsoup
 import java.nio.charset.Charset
 
 object DataProvider {
@@ -23,10 +26,7 @@ object DataProvider {
 
     @JvmStatic
     fun login(username: String, password: String) {
-        var response = syncGet(UrlGetter.getLoginFormUrl())
-        if (!response.isSuccessful) throw NetworkException()
-
-        var doc = Jsoup.parse(response.body?.string() ?: "")
+        var doc = syncGet(UrlGetter.getLoginFormUrl()).parse()
         val rawHtml = doc.html()
         var index = rawHtml.indexOf("name=\"formhash\"")
         if (index == -1) throw NetworkException()
@@ -46,9 +46,7 @@ object DataProvider {
             .add("questionid", "0")
             .add("referer", UrlGetter.getDefaultUrl())
             .build()
-        response = syncFormPost(UrlGetter.getLoginRequestUrl(loginHash), formBody)
-        if (!response.isSuccessful) throw NetworkException()
-        doc = Jsoup.parse(response.body?.string() ?: "")
+        doc = syncFormPost(UrlGetter.getLoginRequestUrl(loginHash), formBody).parse()
         Log.d(ContentValues.TAG, "login: ${doc.html()}")
         if (!doc.outerHtml().contains("欢迎")) {
             val message = doc.select("p").first()?.text() ?: doc.text().removeScripts()
@@ -57,7 +55,11 @@ object DataProvider {
     }
 
     @JvmStatic
-    fun getHomeItemList(): ArrayList<SectionGroup> {
-        TODO()
+    fun getHomeData(): HomeUIState {
+        val doc = syncGet(UrlGetter.getDefaultUrl()).parse()
+        return HomeUIState(
+            sectionGroups = doc.getSectionGroups().toMutableStateList(),
+            avatarUrl = doc.getAvatarUrl(),
+        )
     }
 }

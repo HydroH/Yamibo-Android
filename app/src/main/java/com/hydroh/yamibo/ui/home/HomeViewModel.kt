@@ -1,6 +1,9 @@
 package com.hydroh.yamibo.ui.home
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,14 +19,20 @@ class HomeViewModel : ViewModel() {
     fun getHomeContent() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                uiState.sectionGroups = DataProvider.getHomeItemList().toMutableStateList()
+                uiState = DataProvider.getHomeData()
             } catch (e: Exception) {
-                TODO()
+                uiState = uiState.copy(
+                    sectionGroups = mutableStateListOf(),
+                    avatarUrl = null,
+                    exception = e,
+                )
             }
         }
     }
 }
 
 data class HomeUIState(
-    var sectionGroups: SnapshotStateList<SectionGroup> = mutableStateListOf()
+    var sectionGroups: SnapshotStateList<SectionGroup> = mutableStateListOf(),
+    var avatarUrl: String? = null,
+    val exception: Exception? = null,
 )

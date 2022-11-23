@@ -55,7 +55,7 @@ fun HomeScreen(
                             it.expanded = !expanded
                         },
                     ) {
-                        it.SectionList.map {
+                        it.sections.map {
                             // SectionItem
                             Card() {
                                 Text(text = it.name)
