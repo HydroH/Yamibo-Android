@@ -16,7 +16,7 @@ import kotlinx.parcelize.Parcelize
 class RootNode(
     buildContext: BuildContext,
     private val backStack: BackStack<NavTarget> = BackStack(
-        initialElement = NavTarget.Login,
+        initialElement = NavTarget.Home,
         savedStateMap = buildContext.savedStateMap
     )
 ) :

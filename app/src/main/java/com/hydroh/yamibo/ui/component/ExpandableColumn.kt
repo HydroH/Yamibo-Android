@@ -6,10 +6,12 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -22,12 +24,17 @@ fun ExpandableColumn(
     content: @Composable () -> Unit,
 ) {
     Column(
-        modifier = modifier.clickable {
-            onExpandedChange(expanded)
-        },
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                onExpandedChange(expanded)
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = label)
+        Text(
+            text = label,
+            textAlign = TextAlign.Left,
+        )
         AnimatedVisibility(
             initiallyVisible = initialExpanded,
             visible = expanded,

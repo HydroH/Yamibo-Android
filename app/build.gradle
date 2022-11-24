@@ -68,6 +68,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
     implementation "com.bumble.appyx:core:1.0.0"
+    implementation "com.google.accompanist:accompanist-placeholder-material:$accompanist_version"
 
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
