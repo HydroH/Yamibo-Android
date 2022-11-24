@@ -3,6 +3,8 @@ package com.hydroh.yamibo.ui.login
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -12,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -96,13 +100,19 @@ fun LoginScreen(
                     label = {
                         Text(
                             text = stringResource(id = R.string.label_username),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
-                    textStyle = MaterialTheme.typography.bodyMedium,
+                    shape = RoundedCornerShape(24.dp),
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Next,
+                    ),
                 )
                 // Password
                 OutlinedTextField(
@@ -112,13 +122,19 @@ fun LoginScreen(
                     label = {
                         Text(
                             text = stringResource(id = R.string.label_password),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
-                    textStyle = MaterialTheme.typography.bodyMedium,
+                    shape = RoundedCornerShape(24.dp),
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done,
+                    ),
                     // Show/Hide Password
                     trailingIcon = {
                         if (uiState.showPassword) {
@@ -159,7 +175,7 @@ fun LoginScreen(
                     if (uiState.loginState != LoginState.LOADING) {
                         Text(
                             text = stringResource(id = R.string.text_login),
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleMedium
                         )
                     } else {
                         CircularProgressIndicator()
