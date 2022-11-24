@@ -63,29 +63,31 @@ fun HomeScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            it.sections.map {
-                                // SectionItem
-                                Card() {
-                                    Text(
-                                        text = it.name,
-                                        textAlign = TextAlign.Left,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .placeholder(
-                                                visible = uiState.homeState == HomeState.LOADING,
-                                                highlight = PlaceholderHighlight.fade(),
-                                            )
-                                    )
-                                    Text(
-                                        text = it.desc,
-                                        textAlign = TextAlign.Left,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .placeholder(
-                                                visible = uiState.homeState == HomeState.LOADING,
-                                                highlight = PlaceholderHighlight.fade(),
-                                            )
-                                    )
+                            Column {
+                                it.sections.forEach {
+                                    // SectionItem
+                                    Card() {
+                                        Text(
+                                            text = it.name,
+                                            textAlign = TextAlign.Left,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .placeholder(
+                                                    visible = uiState.homeState == HomeState.LOADING,
+                                                    highlight = PlaceholderHighlight.fade(),
+                                                )
+                                        )
+                                        Text(
+                                            text = it.desc,
+                                            textAlign = TextAlign.Left,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .placeholder(
+                                                    visible = uiState.homeState == HomeState.LOADING,
+                                                    highlight = PlaceholderHighlight.fade(),
+                                                )
+                                        )
+                                    }
                                 }
                             }
                         }
