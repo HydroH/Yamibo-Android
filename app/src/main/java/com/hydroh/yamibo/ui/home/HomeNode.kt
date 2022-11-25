@@ -1,9 +1,6 @@
 package com.hydroh.yamibo.ui.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -52,7 +49,6 @@ fun HomeScreen(
     Surface {
         LazyColumn(
             modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             uiState.sectionGroups.map {
                 item {
@@ -63,37 +59,49 @@ fun HomeScreen(
                         onExpandedChange = { expanded ->
                             it.expanded = !expanded
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                     ) {
-                        Column(Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
                             it.sections.forEach {
                                 // SectionItem
                                 ElevatedCard(
                                     onClick = {},
-                                    Modifier.padding(vertical = 8.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
                                 ) {
-                                    Text(
-                                        text = it.name,
-                                        textAlign = TextAlign.Left,
-                                        style = MaterialTheme.typography.titleLarge,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .placeholder(
-                                                visible = uiState.homeState == HomeState.LOADING,
-                                                highlight = PlaceholderHighlight.fade(),
-                                            )
-                                    )
-                                    Text(
-                                        text = it.desc,
-                                        textAlign = TextAlign.Left,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .placeholder(
-                                                visible = uiState.homeState == HomeState.LOADING,
-                                                highlight = PlaceholderHighlight.fade(),
-                                            )
-                                    )
+                                    Column(
+                                        modifier = Modifier.padding(12.dp)
+                                    ) {
+                                        Text(
+                                            text = it.name,
+                                            textAlign = TextAlign.Left,
+                                            style = MaterialTheme.typography.titleLarge,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .placeholder(
+                                                    visible = uiState.homeState == HomeState.LOADING,
+                                                    highlight = PlaceholderHighlight.fade(),
+                                                )
+                                        )
+                                        Spacer(Modifier.height(12.dp))
+                                        Text(
+                                            text = it.desc,
+                                            textAlign = TextAlign.Left,
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .placeholder(
+                                                    visible = uiState.homeState == HomeState.LOADING,
+                                                    highlight = PlaceholderHighlight.fade(),
+                                                )
+                                        )
+                                    }
                                 }
                             }
                         }
