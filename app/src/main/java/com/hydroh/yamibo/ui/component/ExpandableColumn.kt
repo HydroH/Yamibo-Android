@@ -39,7 +39,7 @@ fun ExpandableColumn(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.LightGray)
+                .background(color = Color(0xFFDDDDDD))
                 .clickable {
                     onExpandedChange(expanded)
                 }

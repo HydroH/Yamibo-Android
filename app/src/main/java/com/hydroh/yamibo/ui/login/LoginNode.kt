@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.push
+import com.bumble.appyx.navmodel.backstack.activeElement
+import com.bumble.appyx.navmodel.backstack.operation.pop
+import com.bumble.appyx.navmodel.backstack.operation.replace
 import com.hydroh.yamibo.R
 import com.hydroh.yamibo.ui.navigation.RootNode
 
@@ -164,7 +166,20 @@ fun LoginScreen(
                     onClick = {
                         viewModel.submitLogin()
                         if (uiState.loginState == LoginState.SUCCESS) {
-                            backStack?.push(RootNode.NavTarget.Home)
+                            backStack?.apply {
+                                pop()
+                                elements.value.activeElement.let {
+                                    when (it) {
+                                        is RootNode.NavTarget.Home -> {
+                                            replace(it)
+                                        }
+                                        is RootNode.NavTarget.Section -> {
+                                            replace(it)
+                                        }
+                                        else -> {}
+                                    }
+                                }
+                            }
                         }
                     },
                     enabled = uiState.loginState != LoginState.LOADING,

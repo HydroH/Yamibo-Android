@@ -2,9 +2,14 @@ package com.hydroh.yamibo.ui.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +39,7 @@ class HomeNode(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -42,65 +47,72 @@ fun HomeScreen(
     viewModel: HomeViewModel = HomeViewModel(),
 ) {
     val uiState = viewModel.uiState
+
     LaunchedEffect(Unit) {
         viewModel.getHomeContent()
     }
 
+    val pullRefreshState = rememberPullRefreshState(
+        uiState.homeState == HomeState.LOADING,
+        { viewModel.getHomeContent() })
+
     Surface {
-        LazyColumn(
-            modifier = modifier.fillMaxWidth(),
-        ) {
-            uiState.sectionGroups.map {
-                item {
-                    ExpandableColumn(
-                        label = it.name,
-                        initialExpanded = it.initialExpanded,
-                        expanded = it.expanded,
-                        onExpandedChange = { expanded ->
-                            it.expanded = !expanded
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
+        Box(Modifier.pullRefresh(pullRefreshState)) {
+            LazyColumn(
+                modifier = modifier.fillMaxWidth(),
+            ) {
+                uiState.sectionGroups.map {
+                    item {
+                        ExpandableColumn(
+                            label = it.name,
+                            initialExpanded = it.initialExpanded,
+                            expanded = it.expanded,
+                            onExpandedChange = { expanded ->
+                                it.expanded = !expanded
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
                         ) {
-                            it.sections.forEach {
-                                // SectionItem
-                                ElevatedCard(
-                                    onClick = {},
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(12.dp)
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(16.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            ) {
+                                it.sections.forEach {
+                                    // SectionItem
+                                    ElevatedCard(
+                                        onClick = {},
+                                        modifier = Modifier
+                                            .fillMaxWidth()
                                     ) {
-                                        Text(
-                                            text = it.name,
-                                            textAlign = TextAlign.Left,
-                                            style = MaterialTheme.typography.titleLarge,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .placeholder(
-                                                    visible = uiState.homeState == HomeState.LOADING,
-                                                    highlight = PlaceholderHighlight.fade(),
-                                                )
-                                        )
-                                        Spacer(Modifier.height(12.dp))
-                                        Text(
-                                            text = it.desc,
-                                            textAlign = TextAlign.Left,
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .placeholder(
-                                                    visible = uiState.homeState == HomeState.LOADING,
-                                                    highlight = PlaceholderHighlight.fade(),
-                                                )
-                                        )
+                                        Column(
+                                            modifier = Modifier.padding(12.dp)
+                                        ) {
+                                            Text(
+                                                text = it.name,
+                                                textAlign = TextAlign.Left,
+                                                style = MaterialTheme.typography.titleMedium,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .placeholder(
+                                                        visible = uiState.homeState == HomeState.LOADING,
+                                                        highlight = PlaceholderHighlight.fade(),
+                                                    )
+                                            )
+                                            Spacer(Modifier.height(12.dp))
+                                            Text(
+                                                text = it.desc,
+                                                textAlign = TextAlign.Left,
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .placeholder(
+                                                        visible = uiState.homeState == HomeState.LOADING,
+                                                        highlight = PlaceholderHighlight.fade(),
+                                                    )
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -108,6 +120,12 @@ fun HomeScreen(
                     }
                 }
             }
+
+            PullRefreshIndicator(
+                refreshing = uiState.homeState == HomeState.LOADING,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
 }

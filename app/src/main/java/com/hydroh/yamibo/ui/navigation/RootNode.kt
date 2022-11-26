@@ -16,7 +16,7 @@ import kotlinx.parcelize.Parcelize
 class RootNode(
     buildContext: BuildContext,
     private val backStack: BackStack<NavTarget> = BackStack(
-        initialElement = NavTarget.Home,
+        initialElement = NavTarget.Home(),
         savedStateMap = buildContext.savedStateMap
     )
 ) :
@@ -26,10 +26,13 @@ class RootNode(
     ) {
     sealed class NavTarget : Parcelable {
         @Parcelize
-        object Home : NavTarget()
+        class Home : NavTarget()
 
         @Parcelize
-        object Login : NavTarget()
+        class Login : NavTarget()
+
+        @Parcelize
+        class Section(val id: String) : NavTarget()
     }
 
     @Composable
@@ -45,5 +48,6 @@ class RootNode(
         when (navTarget) {
             is NavTarget.Home -> HomeNode(buildContext, backStack)
             is NavTarget.Login -> LoginNode(buildContext, backStack)
+            is NavTarget.Section -> TODO()
         }
 }
