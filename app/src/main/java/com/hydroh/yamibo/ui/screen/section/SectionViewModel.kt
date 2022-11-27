@@ -1,4 +1,6 @@
 package com.hydroh.yamibo.ui.screen.section
 
-class SectionViewModel {
-}
+import com.hydroh.yamibo.model.CommonHomeViewModel
+
+
+class SectionViewModel : CommonHomeViewModel()

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 data class Section(
-    val name: String = "",
+    val title: String = "",
     val desc: String = "",
     val url: String = "",
     val newCount: String = "",
@@ -14,7 +14,7 @@ data class Section(
 )
 
 class SectionGroup(
-    val name: String = "",
+    val title: String = "",
     val sections: List<Section> = arrayListOf(),
     val initialExpanded: Boolean = true,
 ) {

@@ -16,7 +16,7 @@ fun Document.getSectionGroups(): ArrayList<SectionGroup> {
                 sectionElem.child(1).apply {
                     sections.add(
                         Section(
-                            name = select("h2 a").first()?.ownText() ?: "",
+                            title = select("h2 a").first()?.ownText() ?: "",
                             desc = select("p.xg2").first()?.ownText() ?: "",
                             url = select("h2 a").first()?.attr("href") ?: "",
                             newCount = select("h2 em").first()?.ownText() ?: "",
@@ -28,7 +28,7 @@ fun Document.getSectionGroups(): ArrayList<SectionGroup> {
             }
         }
         val group = SectionGroup(
-            name = title,
+            title = title,
             sections = sections,
             initialExpanded = true,
         )
