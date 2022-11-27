@@ -10,7 +10,7 @@ import com.hydroh.yamibo.data.network.syncFormPost
 import com.hydroh.yamibo.data.network.syncGet
 import com.hydroh.yamibo.data.parser.getAvatarUrl
 import com.hydroh.yamibo.data.parser.getSectionGroups
-import com.hydroh.yamibo.ui.home.HomeUIState
+import com.hydroh.yamibo.ui.screen.home.HomeUIState
 import com.hydroh.yamibo.util.LoginException
 import com.hydroh.yamibo.util.NetworkException
 import com.hydroh.yamibo.util.parse

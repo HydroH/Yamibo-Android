@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "org.jetbrains.kotlin.plugin.parcelize"
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -46,6 +47,14 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    applicationVariants.all { variant ->
+        kotlin.sourceSets {
+            getByName(variant.name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -68,8 +77,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4"
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
-    implementation "com.bumble.appyx:core:1.0.0"
     implementation "com.google.accompanist:accompanist-placeholder-material:$accompanist_version"
+    implementation "io.github.raamcosta.compose-destinations:animations-core:$compose_destinations_version"
+    ksp "io.github.raamcosta.compose-destinations:ksp:$compose_destinations_version"
 
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'

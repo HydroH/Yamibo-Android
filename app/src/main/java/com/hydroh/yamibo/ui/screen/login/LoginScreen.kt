@@ -1,4 +1,4 @@
-package com.hydroh.yamibo.ui.login
+package com.hydroh.yamibo.ui.screen.login
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -21,36 +21,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.activeElement
-import com.bumble.appyx.navmodel.backstack.operation.pop
-import com.bumble.appyx.navmodel.backstack.operation.replace
 import com.hydroh.yamibo.R
-import com.hydroh.yamibo.ui.navigation.RootNode
-
-class LoginNode(
-    buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>,
-    private val viewModel: LoginViewModel = LoginViewModel(),
-) : Node(buildContext) {
-
-    @Composable
-    override fun View(modifier: Modifier) {
-        LoginScreen(
-            modifier = modifier,
-            backStack = backStack,
-            viewModel = viewModel,
-        )
-    }
-}
+import com.ramcosta.composedestinations.annotation.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Destination
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    backStack: BackStack<RootNode.NavTarget>? = null,
     viewModel: LoginViewModel = LoginViewModel(),
 ) {
     val uiState = viewModel.uiState
@@ -166,20 +144,7 @@ fun LoginScreen(
                     onClick = {
                         viewModel.submitLogin()
                         if (uiState.loginState == LoginState.SUCCESS) {
-                            backStack?.apply {
-                                pop()
-                                elements.value.activeElement.let {
-                                    when (it) {
-                                        is RootNode.NavTarget.Home -> {
-                                            replace(it)
-                                        }
-                                        is RootNode.NavTarget.Section -> {
-                                            replace(it)
-                                        }
-                                        else -> {}
-                                    }
-                                }
-                            }
+                            // TODO: Navigation
                         }
                     },
                     enabled = uiState.loginState != LoginState.LOADING,

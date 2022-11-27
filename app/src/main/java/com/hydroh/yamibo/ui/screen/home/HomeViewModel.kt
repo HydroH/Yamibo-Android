@@ -1,4 +1,4 @@
-package com.hydroh.yamibo.ui.home
+package com.hydroh.yamibo.ui.screen.home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf

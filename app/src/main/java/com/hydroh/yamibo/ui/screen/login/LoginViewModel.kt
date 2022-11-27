@@ -1,4 +1,4 @@
-package com.hydroh.yamibo.ui.login
+package com.hydroh.yamibo.ui.screen.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

@@ -1,4 +1,4 @@
-package com.hydroh.yamibo.ui.home
+package com.hydroh.yamibo.ui.screen.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,36 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.material.placeholder
 import com.hydroh.yamibo.ui.component.ExpandableColumn
-import com.hydroh.yamibo.ui.navigation.RootNode
-
-class HomeNode(
-    buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>,
-    private val viewModel: HomeViewModel = HomeViewModel(),
-) : Node(buildContext) {
-
-    @Composable
-    override fun View(modifier: Modifier) {
-        HomeScreen(
-            modifier = modifier,
-            backStack = backStack,
-            viewModel = viewModel,
-        )
-    }
-}
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    backStack: BackStack<RootNode.NavTarget>? = null,
     viewModel: HomeViewModel = HomeViewModel(),
 ) {
     val uiState = viewModel.uiState
