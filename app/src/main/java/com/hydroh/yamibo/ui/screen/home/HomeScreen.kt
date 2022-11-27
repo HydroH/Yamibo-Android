@@ -18,15 +18,20 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.material.placeholder
 import com.hydroh.yamibo.ui.component.ExpandableColumn
+import com.hydroh.yamibo.ui.screen.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.NavResult
+import com.ramcosta.composedestinations.result.ResultRecipient
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @RootNavGraph(start = true)
 @Destination
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
+    navigator: DestinationsNavigator? = null,
+    loginRecipient: ResultRecipient<LoginScreenDestination, Boolean>? = null,
     viewModel: HomeViewModel = HomeViewModel(),
 ) {
     val uiState = viewModel.uiState
@@ -34,15 +39,23 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         viewModel.getHomeContent()
     }
+    loginRecipient?.onNavResult { result ->
+        when (result) {
+            is NavResult.Value -> {
+                if (result.value) viewModel.getHomeContent()
+            }
+            else -> {}
+        }
+    }
 
     val pullRefreshState = rememberPullRefreshState(
-        uiState.homeState == HomeState.LOADING,
+        uiState.homeState == HomeState.BEFORE || uiState.homeState == HomeState.LOADING,
         { viewModel.getHomeContent() })
 
     Surface {
         Box(Modifier.pullRefresh(pullRefreshState)) {
             LazyColumn(
-                modifier = modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 uiState.sectionGroups.map {
                     item {
@@ -79,7 +92,7 @@ fun HomeScreen(
                                                 modifier = Modifier
                                                     .fillMaxWidth()
                                                     .placeholder(
-                                                        visible = uiState.homeState == HomeState.LOADING,
+                                                        visible = uiState.homeState == HomeState.BEFORE,
                                                         highlight = PlaceholderHighlight.fade(),
                                                     )
                                             )
@@ -91,7 +104,7 @@ fun HomeScreen(
                                                 modifier = Modifier
                                                     .fillMaxWidth()
                                                     .placeholder(
-                                                        visible = uiState.homeState == HomeState.LOADING,
+                                                        visible = uiState.homeState == HomeState.BEFORE,
                                                         highlight = PlaceholderHighlight.fade(),
                                                     )
                                             )
@@ -105,7 +118,7 @@ fun HomeScreen(
             }
 
             PullRefreshIndicator(
-                refreshing = uiState.homeState == HomeState.LOADING,
+                refreshing = uiState.homeState == HomeState.BEFORE || uiState.homeState == HomeState.LOADING,
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter)
             )

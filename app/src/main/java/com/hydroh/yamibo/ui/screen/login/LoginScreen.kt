@@ -23,17 +23,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hydroh.yamibo.R
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier,
+    resultNavigator: ResultBackNavigator<Boolean>? = null,
     viewModel: LoginViewModel = LoginViewModel(),
 ) {
     val uiState = viewModel.uiState
     Surface {
-        Column(modifier) {
+        Column {
 
             Spacer(
                 Modifier
@@ -144,7 +145,7 @@ fun LoginScreen(
                     onClick = {
                         viewModel.submitLogin()
                         if (uiState.loginState == LoginState.SUCCESS) {
-                            // TODO: Navigation
+                            resultNavigator?.navigateBack(result = true)
                         }
                     },
                     enabled = uiState.loginState != LoginState.LOADING,

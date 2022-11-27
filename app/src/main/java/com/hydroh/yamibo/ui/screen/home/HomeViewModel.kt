@@ -46,11 +46,12 @@ class HomeViewModel : ViewModel() {
 data class HomeUIState(
     var sectionGroups: SnapshotStateList<SectionGroup> = mutableStateListOf(),
     var avatarUrl: String? = null,
-    val homeState: HomeState = HomeState.LOADING,
+    val homeState: HomeState = HomeState.BEFORE,
     val exception: Exception? = null,
 )
 
 enum class HomeState {
+    BEFORE,
     LOADING,
     SUCCESS,
     FAIL,
