@@ -13,14 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hydroh.yamibo.model.CommonHomeState
 import com.hydroh.yamibo.model.CommonHomeUIState
+import com.hydroh.yamibo.model.Post
+import com.hydroh.yamibo.model.Section
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CommonHomeListView(
     uiState: CommonHomeUIState,
     onRefresh: () -> Unit,
-    onSectionClick: () -> Unit,
-    onPostClick: () -> Unit,
+    onSectionClick: (Section) -> Unit,
+    onPostClick: (Post) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullRefreshState(
@@ -53,7 +55,7 @@ fun CommonHomeListView(
                                 it.sections.forEach {
                                     SectionCard(
                                         section = it,
-                                        onClick = { onSectionClick() },
+                                        onClick = { onSectionClick(it) },
                                         placeHolder = uiState.commonHomeState == CommonHomeState.BEFORE,
                                         modifier = Modifier.fillMaxWidth()
                                     )

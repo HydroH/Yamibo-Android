@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import com.hydroh.yamibo.ui.component.CommonHomeListView
 import com.hydroh.yamibo.ui.screen.destinations.LoginScreenDestination
+import com.hydroh.yamibo.ui.screen.destinations.SectionScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -36,7 +37,7 @@ fun HomeScreen(
     CommonHomeListView(
         uiState = uiState,
         onRefresh = { viewModel.getCommonHomeContent() },
-        onSectionClick = { /*TODO*/ },
+        onSectionClick = { navigator?.navigate(SectionScreenDestination(it.url)) },
         onPostClick = { /*TODO*/ }
     )
 }

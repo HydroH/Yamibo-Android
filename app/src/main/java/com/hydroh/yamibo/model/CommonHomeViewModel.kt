@@ -23,13 +23,13 @@ open class CommonHomeViewModel : ViewModel() {
     )
         private set
 
-    fun getCommonHomeContent() {
+    fun getCommonHomeContent(url: String? = null) {
         if (uiState.commonHomeState != CommonHomeState.BEFORE) {
             uiState = uiState.copy(commonHomeState = CommonHomeState.LOADING)
         }
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                uiState = DataProvider.getCommonHomeData()
+                uiState = DataProvider.getCommonHomeData(url)
                 uiState = uiState.copy(commonHomeState = CommonHomeState.SUCCESS)
             } catch (e: Exception) {
                 uiState = uiState.copy(

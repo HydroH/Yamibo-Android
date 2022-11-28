@@ -1,7 +1,7 @@
 package com.hydroh.yamibo.data.network
 
 
-object UrlGetter {
+object UrlUtils {
     private const val APP_UPDATE_URL = "https://yamibo-android.firebaseapp.com/version.json"
 
     private const val BASE_URL = "https://bbs.yamibo.com/"
@@ -65,4 +65,8 @@ object UrlGetter {
             const val BIG = "big"
         }
     }
+}
+
+fun String.getFullUrl(): String {
+    return UrlUtils.getFullUrl(this)
 }
