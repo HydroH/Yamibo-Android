@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.compose.runtime.toMutableStateList
 import com.hydroh.yamibo.data.network.*
 import com.hydroh.yamibo.data.parser.getAvatarUrl
+import com.hydroh.yamibo.data.parser.getPosts
 import com.hydroh.yamibo.data.parser.getSectionGroups
 import com.hydroh.yamibo.model.CommonHomeUIState
 import com.hydroh.yamibo.util.LoginException
@@ -56,6 +57,8 @@ object DataProvider {
         val doc = syncGet(url?.getFullUrl() ?: UrlUtils.getDefaultUrl()).parse()
         return CommonHomeUIState(
             sectionGroups = doc.getSectionGroups().toMutableStateList(),
+            topPosts = doc.getPosts(top = true).toMutableStateList(),
+            posts = doc.getPosts().toMutableStateList(),
             avatarUrl = doc.getAvatarUrl(),
         )
     }

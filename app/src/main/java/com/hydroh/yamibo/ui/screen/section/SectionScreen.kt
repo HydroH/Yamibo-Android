@@ -6,6 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.hydroh.yamibo.ui.component.CommonHomeListView
 import com.hydroh.yamibo.ui.screen.destinations.LoginScreenDestination
 import com.hydroh.yamibo.ui.screen.destinations.SectionScreenDestination
+import com.hydroh.yamibo.ui.screen.destinations.ThreadScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.result.NavResult
@@ -38,7 +39,7 @@ fun SectionScreen(
         uiState = uiState,
         onRefresh = { viewModel.getCommonHomeContent(url) },
         onSectionClick = { navigator?.navigate(SectionScreenDestination(it.url)) },
-        onPostClick = { /*TODO*/ }
+        onPostClick = { navigator?.navigate(ThreadScreenDestination(it.url)) }
     )
 }
 

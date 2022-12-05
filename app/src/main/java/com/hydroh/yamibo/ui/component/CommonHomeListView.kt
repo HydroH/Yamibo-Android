@@ -8,6 +8,10 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,6 +32,7 @@ fun CommonHomeListView(
     val pullRefreshState = rememberPullRefreshState(
         uiState.commonHomeState == CommonHomeState.BEFORE || uiState.commonHomeState == CommonHomeState.LOADING,
         { onRefresh() })
+    var topPostsExpand by rememberSaveable { mutableStateOf(true) } // TODO: 添加持久化
 
     Surface(modifier) {
         Box(Modifier.pullRefresh(pullRefreshState)) {
@@ -62,6 +67,62 @@ fun CommonHomeListView(
                                 }
                             }
                         }
+                    }
+                }
+
+                if (uiState.topPosts.isNotEmpty()) {
+                    item {
+                        ExpandableColumn(
+                            label = "置顶主题",
+                            initialExpanded = topPostsExpand,
+                            expanded = topPostsExpand,
+                            onExpandedChange = { expanded ->
+                                topPostsExpand = !expanded
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(16.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            ) {
+                                uiState.topPosts.forEach {
+                                    PostCard(
+                                        post = it,
+                                        onClick = { onPostClick(it) },
+                                        placeHolder = uiState.commonHomeState == CommonHomeState.BEFORE,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (uiState.posts.isNotEmpty()) {
+                    item {
+                        ExpandableColumn(
+                            // Fake column, not expandable
+                            label = "主题",
+                            initialExpanded = true,
+                            expanded = true,
+                            onExpandedChange = {},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {}
+                    }
+                }
+
+                uiState.posts.map {
+                    item {
+                        PostCard(
+                            post = it,
+                            onClick = { onPostClick(it) },
+                            placeHolder = uiState.commonHomeState == CommonHomeState.BEFORE,
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
                 }
             }
