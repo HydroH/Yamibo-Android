@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.hydroh.yamibo.model.CommonHomeState
+import com.hydroh.yamibo.model.CommonLoadState
 import com.hydroh.yamibo.model.CommonHomeUIState
 import com.hydroh.yamibo.model.Post
 import com.hydroh.yamibo.model.Section
@@ -30,7 +30,7 @@ fun CommonHomeListView(
     modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullRefreshState(
-        uiState.commonHomeState == CommonHomeState.BEFORE || uiState.commonHomeState == CommonHomeState.LOADING,
+        uiState.commonHomeState == CommonLoadState.BEFORE || uiState.commonHomeState == CommonLoadState.LOADING,
         { onRefresh() })
     var topPostsExpand by rememberSaveable { mutableStateOf(true) } // TODO: 添加持久化
 
@@ -61,7 +61,7 @@ fun CommonHomeListView(
                                     SectionCard(
                                         section = it,
                                         onClick = { onSectionClick(it) },
-                                        placeHolder = uiState.commonHomeState == CommonHomeState.BEFORE,
+                                        placeHolder = uiState.commonHomeState == CommonLoadState.BEFORE,
                                         modifier = Modifier.fillMaxWidth()
                                     )
                                 }
@@ -92,7 +92,7 @@ fun CommonHomeListView(
                                     PostCard(
                                         post = it,
                                         onClick = { onPostClick(it) },
-                                        placeHolder = uiState.commonHomeState == CommonHomeState.BEFORE,
+                                        placeHolder = uiState.commonHomeState == CommonLoadState.BEFORE,
                                         modifier = Modifier.fillMaxWidth()
                                     )
                                 }
@@ -120,7 +120,7 @@ fun CommonHomeListView(
                         PostCard(
                             post = it,
                             onClick = { onPostClick(it) },
-                            placeHolder = uiState.commonHomeState == CommonHomeState.BEFORE,
+                            placeHolder = uiState.commonHomeState == CommonLoadState.BEFORE,
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
@@ -128,7 +128,7 @@ fun CommonHomeListView(
             }
 
             PullRefreshIndicator(
-                refreshing = uiState.commonHomeState == CommonHomeState.BEFORE || uiState.commonHomeState == CommonHomeState.LOADING,
+                refreshing = uiState.commonHomeState == CommonLoadState.BEFORE || uiState.commonHomeState == CommonLoadState.LOADING,
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter)
             )

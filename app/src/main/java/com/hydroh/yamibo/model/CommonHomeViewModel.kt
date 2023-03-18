@@ -24,13 +24,13 @@ open class CommonHomeViewModel : ViewModel() {
         private set
 
     fun getCommonHomeContent(url: String? = null) {
-        if (uiState.commonHomeState != CommonHomeState.BEFORE) {
-            uiState = uiState.copy(commonHomeState = CommonHomeState.LOADING)
+        if (uiState.commonHomeState != CommonLoadState.BEFORE) {
+            uiState = uiState.copy(commonHomeState = CommonLoadState.LOADING)
         }
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 uiState = DataProvider.getCommonHomeData(url)
-                uiState = uiState.copy(commonHomeState = CommonHomeState.SUCCESS)
+                uiState = uiState.copy(commonHomeState = CommonLoadState.SUCCESS)
             } catch (e: Exception) {
                 uiState = uiState.copy(
                     sectionGroups = mutableStateListOf(),
@@ -38,7 +38,7 @@ open class CommonHomeViewModel : ViewModel() {
                     posts = mutableStateListOf(),
                     avatarUrl = null,
                     exception = e,
-                    commonHomeState = CommonHomeState.FAIL,
+                    commonHomeState = CommonLoadState.FAIL,
                 )
             }
         }
@@ -50,11 +50,11 @@ data class CommonHomeUIState (
     var topPosts: SnapshotStateList<Post> = mutableStateListOf(),
     var posts: SnapshotStateList<Post> = mutableStateListOf(),
     var avatarUrl: String? = null,
-    val commonHomeState: CommonHomeState = CommonHomeState.BEFORE,
+    val commonHomeState: CommonLoadState = CommonLoadState.BEFORE,
     val exception: Exception? = null,
 )
 
-enum class CommonHomeState {
+enum class CommonLoadState {
     BEFORE,
     LOADING,
     SUCCESS,

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Yamibo</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="app_welcome">欢迎光临百合会</string>
     <string name="label_username">用户名</string>
     <string name="label_password">密码</string>

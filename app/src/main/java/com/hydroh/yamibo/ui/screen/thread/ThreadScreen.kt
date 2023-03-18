@@ -11,7 +11,8 @@ import com.ramcosta.composedestinations.result.ResultRecipient
 fun ThreadScreen(
     url: String,
     navigator: DestinationsNavigator? = null,
-    loginRecipient: ResultRecipient<LoginScreenDestination, Boolean>? = null
+    loginRecipient: ResultRecipient<LoginScreenDestination, Boolean>? = null,
+    viewModel: ThreadViewModel = ThreadViewModel(),
 ) {
 
 }
