@@ -7,8 +7,8 @@ import androidx.compose.runtime.toMutableStateList
 import com.hydroh.yamibo.data.network.*
 import com.hydroh.yamibo.data.parser.getAvatarUrl
 import com.hydroh.yamibo.data.parser.getPosts
-import com.hydroh.yamibo.data.parser.getReplies
 import com.hydroh.yamibo.data.parser.getSectionGroups
+import com.hydroh.yamibo.data.parser.getThread
 import com.hydroh.yamibo.model.CommonHomeUIState
 import com.hydroh.yamibo.ui.screen.thread.ThreadUIState
 import com.hydroh.yamibo.util.LoginException
@@ -69,7 +69,7 @@ object DataProvider {
     fun getThreadData(url: String): ThreadUIState {
         val doc = syncGet(url).parse()
         return ThreadUIState(
-            replies = doc.getReplies().toMutableStateList()
+            thread = doc.getThread()
         )
     }
 }

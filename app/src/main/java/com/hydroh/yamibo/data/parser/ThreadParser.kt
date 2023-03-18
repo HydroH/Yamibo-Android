@@ -1,6 +1,7 @@
 package com.hydroh.yamibo.data.parser
 
 import com.hydroh.yamibo.model.Reply
+import com.hydroh.yamibo.model.Thread
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
@@ -11,11 +12,12 @@ fun Element.simplify(): Element {
     return this
 }
 
-fun Document.getReplies(): ArrayList<Reply> {
-    val replies = ArrayList<Reply>()
+fun Document.getThread(): Thread {
+    val thread = Thread()
+    // TODO: Add other properties
     select("table.plhin").forEach { replyElem ->
         replyElem.apply {
-            replies.add(
+            thread.replies.add(
                 Reply(
                 author = select("td.pls div.auth1 a.xw1").first()?.ownText() ?: "",
                 avatarUrl = select("td.pls div.avatar a.avtm img").first()?.attr("src") ?: "",
@@ -24,5 +26,5 @@ fun Document.getReplies(): ArrayList<Reply> {
             ))
         }
     }
-    return replies
+    return thread
 }

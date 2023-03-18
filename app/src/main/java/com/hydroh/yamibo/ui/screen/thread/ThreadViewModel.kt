@@ -1,22 +1,23 @@
 package com.hydroh.yamibo.ui.screen.thread
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hydroh.yamibo.data.DataProvider
 import com.hydroh.yamibo.model.CommonLoadState
 import com.hydroh.yamibo.model.Reply
+import com.hydroh.yamibo.model.Thread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ThreadViewModel : ViewModel() {
     var uiState by mutableStateOf(
         ThreadUIState(
-            replies = mutableStateListOf(Reply())
+            thread = Thread(
+                replies = arrayListOf(Reply())
+            )
         )
     )
         private set
@@ -31,7 +32,7 @@ class ThreadViewModel : ViewModel() {
                 uiState = uiState.copy(threadState = CommonLoadState.SUCCESS)
             } catch (e: Exception) {
                 uiState = uiState.copy(
-                    replies = mutableStateListOf(),
+                    thread = Thread(),
                     exception = e,
                     threadState = CommonLoadState.FAIL,
                 )
@@ -41,7 +42,7 @@ class ThreadViewModel : ViewModel() {
 }
 
 data class ThreadUIState(
-    var replies: SnapshotStateList<Reply> = mutableStateListOf(),
+    var thread: Thread = Thread(),
     var threadState: CommonLoadState = CommonLoadState.BEFORE,
     val exception: Exception? = null,
 )

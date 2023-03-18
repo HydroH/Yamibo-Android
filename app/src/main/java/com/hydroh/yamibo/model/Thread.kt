@@ -7,7 +7,7 @@ data class Thread(
     val tag: String = "",
     val postTime: String = "",
     val replyCount: String = "",
-    val replies: List<Reply> = arrayListOf(),
+    val replies: ArrayList<Reply> = arrayListOf(),
 )
 
 data class Reply(
