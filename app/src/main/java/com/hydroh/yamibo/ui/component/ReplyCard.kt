@@ -10,6 +10,7 @@ import coil.compose.AsyncImage
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.material.placeholder
+import com.hydroh.yamibo.data.network.HttpSingleton
 import com.hydroh.yamibo.model.Reply
 import dev.jeziellago.compose.markdowntext.MarkdownText
 
@@ -58,6 +59,7 @@ fun ReplyCard(
             Spacer(modifier = Modifier.height(16.dp))
             MarkdownText(
                 markdown = reply.text,
+                imageLoader = HttpSingleton.imageLoader,
                 modifier = Modifier.placeholder(
                     visible = placeHolder,
                     highlight = PlaceholderHighlight.fade(),

@@ -10,7 +10,7 @@ fun asyncGet(url: String, callback: Callback) {
         .url(url)
         .get()
         .build()
-    OkHttpSingleton.client.newCall(request)
+    HttpSingleton.client.newCall(request)
         .enqueue(callback)
 }
 
@@ -19,7 +19,7 @@ fun syncGet(url: String): Response {
         .url(url)
         .get()
         .build()
-    return OkHttpSingleton.client.newCall(request).execute()
+    return HttpSingleton.client.newCall(request).execute()
 }
 
 fun syncFormPost(url: String, body: FormBody): Response {
@@ -27,5 +27,5 @@ fun syncFormPost(url: String, body: FormBody): Response {
         .url(url)
         .post(body)
         .build()
-    return OkHttpSingleton.client.newCall(request).execute()
+    return HttpSingleton.client.newCall(request).execute()
 }

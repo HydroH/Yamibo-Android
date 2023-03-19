@@ -21,7 +21,7 @@ import java.nio.charset.Charset
 object DataProvider {
     @JvmStatic
     fun init(context: Context) {
-        OkHttpSingleton.init(context)
+        HttpSingleton.init(context)
     }
 
     @JvmStatic
